@@ -125,13 +125,7 @@ gitops-automated-delivery/
 - Containerized a Node.js application using Docker and deployed it on Kubernetes.
 
 - 
-## 📸 Project Screenshots
 
-
-## 📸 Project Screenshots
-
-### 1. GitHub Actions – Successful CI/CD Pipeline
-!
 ## 📸 Project Screenshots
 
 ### 1. GitHub Actions – Successful CI/CD Pipeline
