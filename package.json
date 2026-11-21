@@ -1,0 +1,7 @@
+{
+  "name": "gitops-delivery-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo application for GitOps automated delivery",
+  "scripts": { "start": "node app/server.js", "test": "node --check app/server.js" }
+}
