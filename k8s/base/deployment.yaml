@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,8 +17,8 @@ spec:
     spec:
       containers:
         - name: app
-          image: gitops-delivery-demo:v1
-          imagePullPolicy: IfNotPresent
+          image: harshudocker6257/gitops-delivery-demo:6baf283
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 3000
