@@ -126,7 +126,8 @@ gitops-automated-delivery/
 
 - Configured Argo CD for GitOps-based continuous delivery and automated synchronization.
 
-Implemented Kubernetes health checks, self-healing, and declarative deployment management.
+- Implemented Kubernetes health checks, self-healing, and declarative deployment management.
+
 
 Project Status: Successfully deployed and verified on a local Kubernetes cluster.
 
