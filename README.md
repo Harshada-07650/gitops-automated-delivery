@@ -1,159 +1,131 @@
 # GitOps & Automated Delivery Pipelines
 
-A beginner-friendly GitOps demonstration: GitHub Actions tests the Node.js app, builds and publishes a Docker image, updates the desired image tag in Git, and Argo CD synchronizes Kubernetes to that Git state.
+A containerized Node.js application deployed on Kubernetes using GitHub Actions, Docker, and Argo CD. This project demonstrates CI/CD automation and GitOps-based continuous delivery.
+
+## Project Overview
+
+The project automates application delivery using a Git-based deployment workflow.
+
+- GitHub Actions builds and publishes Docker images.
+- Docker Hub stores container images.
+- Kubernetes runs the containerized application.
+- Argo CD continuously monitors Git and synchronizes the desired application state with Kubernetes.
 
 ## Architecture
 
-Developer -> GitHub -> GitHub Actions (test/build) -> Docker Hub
-                                      |
-                                      v
-                         Update k8s image tag in Git
-                                      |
-                                      v
-                         Argo CD -> Kubernetes
-
-## Requirements
-
-- Windows 10/11, VS Code, Git and Docker Desktop
-- A GitHub account and a Docker Hub account
-- `kubectl` and a local Kubernetes cluster (Docker Desktop Kubernetes or kind)
-- Internet connection
-
-## 1. Create your GitHub repository
-
-1. Create a public repository named `gitops-automated-delivery`.
-2. Extract this ZIP and open the extracted folder in VS Code.
-3. Replace `DOCKERHUB_USERNAME` in `k8s/base/deployment.yaml` with your Docker Hub username.
-4. Replace `YOUR_GITHUB_USERNAME` in `argocd/application.yaml` with your GitHub username.
-5. Open PowerShell in this project folder and run:
-
-```powershell
-git init
-git branch -M main
-git add .
-git commit -m "Initial GitOps project"
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/gitops-automated-delivery.git
-git push -u origin main
+```text
+Developer
+    |
+    v
+GitHub Repository
+    |
+    v
+GitHub Actions
+(Test & Build)
+    |
+    v
+Docker Hub
+(Container Image)
+    |
+    v
+Git Repository
+(Kubernetes Manifests)
+    |
+    v
+Argo CD
+(GitOps Synchronization)
+    |
+    v
+Kubernetes Cluster
+    |
+    v
+Running Application
 ```
 
-Replace `YOUR_GITHUB_USERNAME` with your actual GitHub username.
+## Technologies Used
 
-## 2. Add GitHub Actions secrets
+| Technology | Purpose |
+|---|---|
+| Git & GitHub | Source code management |
+| GitHub Actions | CI/CD automation |
+| Docker | Containerization |
+| Docker Hub | Image registry |
+| Kubernetes | Container orchestration |
+| Argo CD | GitOps continuous delivery |
+| Kustomize | Kubernetes configuration management |
+| Node.js | Application runtime |
+| YAML | Pipeline and deployment configuration |
 
-In GitHub: repository -> Settings -> Secrets and variables -> Actions -> New repository secret.
+## Key Features
 
-Create:
-- `DOCKERHUB_USERNAME`: your Docker Hub username
-- `DOCKERHUB_TOKEN`: a Docker Hub access token (not your account password)
+- Automated CI/CD workflow using GitHub Actions.
+- Docker image build and publishing to Docker Hub.
+- Kubernetes Deployment and Service configuration.
+- Argo CD automated synchronization.
+- Self-healing and automatic pruning.
+- Kubernetes readiness and liveness probes.
+- Two-replica application deployment.
 
-Create the token in Docker Hub -> Account Settings -> Personal access tokens. Give it read/write access. Keep it secret.
+## Deployment Verification
 
-Push a small change to a file under `app/` to trigger the workflow. Check the Actions tab. The workflow tests the app, builds the image, pushes a commit-specific image to Docker Hub, and updates `k8s/base/kustomization.yaml`.
+Successfully deployed and verified on a local Docker Desktop Kubernetes cluster.
 
-## 3. Test the app locally
+**Verified results:**
+- GitHub Actions workflow: Successful
+- Docker Hub image: Published
+- Argo CD Sync Status: Synced
+- Argo CD Health Status: Healthy
+- Kubernetes Pods: 2 Running
+- Pod Restarts: 0
+- Application Version: 1.0.0
 
-```powershell
-docker build -t gitops-delivery-demo:local .
-docker run --rm -p 3000:3000 gitops-delivery-demo:local
+## Application Access
+
+Local application URL:
+
+http://localhost:8081
+
+Note: The application is accessible locally while Kubernetes port-forwarding is active. It is not a public production URL.
+
+## Repository Structure
+
+```text
+gitops-automated-delivery/
+│
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yaml
+│
+├── app/
+│   └── server.js
+│
+├── argocd/
+│   └── application.yaml
+│
+├── k8s/
+│   └── base/
+│       ├── deployment.yaml
+│       ├── service.yaml
+│       └── kustomization.yaml
+│
+├── Dockerfile
+├── package.json
+├── package-lock.json
+└── README.md
 ```
 
-Open http://localhost:3000. Stop the container with Ctrl+C.
+## Project Links
 
-## 4. Prepare Kubernetes
+- **GitHub Repository:** https://github.com/Harshada-07650/gitops-automated-delivery
+- **Docker Hub:** https://hub.docker.com/r/harshudocker6257/gitops-delivery-demo
 
-Enable Kubernetes in Docker Desktop Settings -> Kubernetes, if that option is available in your Docker Desktop version. Wait until the cluster is running, then check:
+## Resume Highlights
 
-```powershell
-kubectl cluster-info
-kubectl get nodes
-```
+- Developed a CI/CD pipeline using GitHub Actions to build and publish Docker images.
+- Containerized a Node.js application using Docker and deployed it on Kubernetes.
+- Configured Argo CD for GitOps-based continuous delivery and automated synchronization.
+- Implemented Kubernetes health checks, self-healing, and declarative deployment management.
 
-If Docker Desktop Kubernetes is unavailable, install kind and create a local cluster:
+---
 
-```powershell
-kind create cluster --name gitops-lab
-kubectl cluster-info
-```
-
-## 5. Install Argo CD
-
-Run:
-
-```powershell
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
-```
-
-Access the Argo CD UI in another PowerShell window:
-
-```powershell
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-```
-
-Open https://localhost:8080 and accept the local development certificate warning. Get the initial password:
-
-```powershell
-$secret = kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"
-[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($secret))
-```
-
-Username: `admin`. Change the initial password after first login. Keep it private.
-
-## 6. Connect Argo CD to your Git repository
-
-Check `argocd/application.yaml` has your correct GitHub repository URL. Then run:
-
-```powershell
-kubectl apply -f argocd/application.yaml
-kubectl get applications -n argocd
-kubectl get pods -n gitops-demo
-```
-
-For a public GitHub repository, Argo CD can read the repo without credentials. For a private repository, configure repository credentials in Argo CD first.
-
-## 7. Open the deployed application
-
-```powershell
-kubectl port-forward svc/gitops-demo -n gitops-demo 8081:80
-```
-
-Open http://localhost:8081.
-
-## 8. Demonstrate automated GitOps deployment
-
-1. Edit the heading or paragraph in `app/server.js`.
-2. Commit and push the change:
-
-```powershell
-git add .
-git commit -m "feat: update demo application"
-git push
-```
-
-3. Watch the GitHub Actions workflow in the Actions tab.
-4. Confirm the workflow pushed a new image tag and updated `k8s/base/kustomization.yaml`.
-5. Watch Argo CD detect and sync the Git change.
-6. Refresh http://localhost:8081 and show the updated application.
-
-## Troubleshooting
-
-- `kubectl` cannot connect: confirm Docker Desktop Kubernetes or kind is running; check `kubectl config current-context`.
-- GitHub Actions login fails: verify both repository secrets and regenerate the Docker Hub token if needed.
-- ImagePullBackOff: check the image name in `k8s/base/deployment.yaml`, Docker Hub repository visibility, and the tag in `k8s/base/kustomization.yaml`.
-- Argo CD does not sync: check repository URL, branch (`main`), path (`k8s/base`), and application status with `kubectl describe application gitops-delivery-demo -n argocd`.
-- App is not reachable: ensure the service and pods are ready, then rerun the port-forward command.
-
-## Resume description
-
-**GitOps & Automated Delivery Pipelines | GitHub Actions, Docker, Docker Hub, Kubernetes, Argo CD, Kustomize**
-- Built a CI pipeline using GitHub Actions to test a Node.js application and build/publish versioned Docker images.
-- Automated Git-based Kubernetes manifest image-tag updates to maintain a declarative desired state.
-- Configured Argo CD automated synchronization and self-healing to deploy Git changes to Kubernetes.
-- Validated application health using Kubernetes readiness and liveness probes.
-
-Only list tools and steps you have personally completed and can explain in an interview.
-
-## Important
-
-This repository is a prepared project starter, not a claim that deployment has already succeeded. Complete the account setup and run the verification steps to produce genuine screenshots and deployment evidence. Do not publish passwords or tokens.
+**Project Status:** Successfully deployed and verified on a local Kubernetes cluster.
