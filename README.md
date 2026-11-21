@@ -129,34 +129,10 @@ gitops-automated-delivery/
 - Implemented Kubernetes health checks, self-healing, and declarative deployment management.
 
 
+
 Project Status: Successfully deployed and verified on a local Kubernetes cluster.
 
-## 📸 Project Screenshots
 
-### 1. GitHub Actions – Successful CI/CD Pipeline
-![GitHub Actions](screenshots/Screenshot%202026-11-21%20181844.png)
-
-### 2. Docker Hub – Published Container Image
-![Docker Hub](screenshots/Screenshot%202026-11-21%20181927.png)
-
-### 3. Argo CD – Application Synced and Healthy
-![Argo CD](screenshots/Screenshot%202026-11-21%20182138.png)
-
-### 4. Kubernetes – Running Pods
-![Kubernetes Pods](screenshots/Screenshot%202026-11-21%20182335.png)
-
-### 5. Live Application Dashboard
-![Live Application](screenshots/Screenshot%202026-11-21%20182423.png)
-
-
-### 2. Docker Hub – Published Container Image
-![Docker Hub](screenshots/Screenshot%202026-11-21%20181927.png)
-
-### 3. Argo CD – Application Synced and Healthy
-![Argo CD](screenshots/Screenshot%202026-11-21%20182138.png)
-
-### 4. Kubernetes – Running Pods
-![Kubernetes Pods](screenshots/04-kubernetes-pods-running.png)
 
 ### 5. Live Application Dashboard
 ![Live Application](screenshots/05-live-application.png)
