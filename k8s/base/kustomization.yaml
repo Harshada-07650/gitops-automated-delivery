@@ -9,4 +9,4 @@ resources:
 images:
   - name: gitops-delivery-demo
     newName: harshudocker6257/gitops-delivery-demo
-    newTag: 6baf283
+    newTag: 337c744
