@@ -1,3 +1,4 @@
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -6,7 +7,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_GITHUB_USERNAME/gitops-automated-delivery.git
+    repoURL: https://github.com/Harshada-07650/gitops-automated-delivery.git
     targetRevision: main
     path: k8s/base
   destination:
