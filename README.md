@@ -1,15 +1,12 @@
 # GitOps & Automated Delivery Pipelines
 
-A containerized Node.js application deployed on Kubernetes using GitHub Actions, Docker, and Argo CD. This project demonstrates CI/CD automation and GitOps-based continuous delivery.
+A containerized Node.js application deployed on Kubernetes using GitHub Actions, Docker, and Argo CD. This project demonstrates automated CI/CD workflows and GitOps-based continuous delivery.
 
-## Project Overview
+## Overview
 
-The project automates application delivery using a Git-based deployment workflow.
+This project implements an automated application delivery workflow using Git as the source of truth for Kubernetes deployment configurations.
 
-- GitHub Actions builds and publishes Docker images.
-- Docker Hub stores container images.
-- Kubernetes runs the containerized application.
-- Argo CD continuously monitors Git and synchronizes the desired application state with Kubernetes.
+GitHub Actions automates the CI/CD workflow and Docker image publishing, Docker Hub stores container images, Kubernetes manages application deployment, and Argo CD synchronizes the cluster with the desired state defined in Git.
 
 ## Architecture
 
@@ -21,7 +18,7 @@ GitHub Repository
     |
     v
 GitHub Actions
-(Test & Build)
+(CI/CD Pipeline)
     |
     v
 Docker Hub
@@ -46,14 +43,14 @@ Running Application
 
 | Technology | Purpose |
 |---|---|
+| Node.js | Application runtime |
 | Git & GitHub | Source code management |
 | GitHub Actions | CI/CD automation |
-| Docker | Containerization |
-| Docker Hub | Image registry |
+| Docker | Application containerization |
+| Docker Hub | Container image registry |
 | Kubernetes | Container orchestration |
 | Argo CD | GitOps continuous delivery |
 | Kustomize | Kubernetes configuration management |
-| Node.js | Application runtime |
 | YAML | Pipeline and deployment configuration |
 
 ## Key Features
@@ -61,31 +58,48 @@ Running Application
 - Automated CI/CD workflow using GitHub Actions.
 - Docker image build and publishing to Docker Hub.
 - Kubernetes Deployment and Service configuration.
-- Argo CD automated synchronization.
-- Self-healing and automatic pruning.
+- GitOps-based application deployment using Argo CD.
+- Automated synchronization and self-healing configuration.
+- Automatic pruning configuration.
 - Kubernetes readiness and liveness probes.
 - Two-replica application deployment.
+- Container resource requests and limits.
 
-## Deployment Verification
+## Deployment and Verification
 
 Successfully deployed and verified on a local Docker Desktop Kubernetes cluster.
 
-**Verified results:**
-- GitHub Actions workflow: Successful
-- Docker Hub image: Published
-- Argo CD Sync Status: Synced
-- Argo CD Health Status: Healthy
-- Kubernetes Pods: 2 Running
-- Pod Restarts: 0
-- Application Version: 1.0.0
+| Verification | Result |
+|---|---|
+| GitHub Actions Workflow | Successful |
+| Docker Hub Image | Published |
+| Argo CD Sync Status | Synced |
+| Argo CD Health Status | Healthy |
+| Kubernetes Pods | 2 Running |
+| Pod Restarts | 0 |
+| Application Version | 1.0.0 |
 
 ## Application Access
 
-Local application URL:
+The application can be tested locally in two ways:
 
-http://localhost:8081
+**1. Node.js Application**
 
-Note: The application is accessible locally while Kubernetes port-forwarding is active. It is not a public production URL.
+`http://localhost:3000/`
+
+**2. Kubernetes Application**
+
+`http://localhost:8081/`
+
+To access the application through Kubernetes, run:
+
+```bash
+kubectl port-forward svc/gitops-demo -n gitops-demo 8081:80
+```
+
+Keep the terminal running while accessing the Kubernetes application.
+
+**Note:** Both URLs are local development URLs. They are not publicly accessible.
 
 ## Repository Structure
 
@@ -108,34 +122,18 @@ gitops-automated-delivery/
 │       ├── service.yaml
 │       └── kustomization.yaml
 │
+├── .dockerignore
+├── .gitignore
 ├── Dockerfile
 ├── package.json
-├── package-lock.json
-└── README.md
+└── package-lock.json
 ```
 
 ## Project Links
 
-- **GitHub Repository:** https://github.com/Harshada-07650/gitops-automated-delivery
-- **Docker Hub:** https://hub.docker.com/r/harshudocker6257/gitops-delivery-demo
+- **GitHub Repository:** [gitops-automated-delivery](https://github.com/Harshada-07650/gitops-automated-delivery)
+- **Docker Hub Repository:** [gitops-delivery-demo](https://hub.docker.com/r/harshudocker6257/gitops-delivery-demo)
 
-## Resume Highlights
-
-- Developed a CI/CD pipeline using GitHub Actions to build and publish Docker images.
-- Containerized a Node.js application using Docker and deployed it on Kubernetes.
-
-- Configured Argo CD for GitOps-based continuous delivery and automated synchronization.
-
-- Implemented Kubernetes health checks, self-healing, and declarative deployment management.
-
-
-
-Project Status: Successfully deployed and verified on a local Kubernetes cluster.
-
-
-
-### 5. Live Application Dashboard
-![Live Application](screenshots/05-live-application.png)
-
+---
 
 **Project Status:** Successfully deployed and verified on a local Kubernetes cluster.
