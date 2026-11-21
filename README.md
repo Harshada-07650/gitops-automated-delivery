@@ -123,9 +123,44 @@ gitops-automated-delivery/
 
 - Developed a CI/CD pipeline using GitHub Actions to build and publish Docker images.
 - Containerized a Node.js application using Docker and deployed it on Kubernetes.
-- Configured Argo CD for GitOps-based continuous delivery and automated synchronization.
-- Implemented Kubernetes health checks, self-healing, and declarative deployment management.
 
----
+- 
+## 📸 Project Screenshots
+
+
+## 📸 Project Screenshots
+
+### 1. GitHub Actions – Successful CI/CD Pipeline
+!
+## 📸 Project Screenshots
+
+### 1. GitHub Actions – Successful CI/CD Pipeline
+![GitHub Actions](screenshots/Screenshot%202026-11-21%20181844.png)
+
+### 2. Docker Hub – Published Container Image
+![Docker Hub](screenshots/Screenshot%202026-11-21%20181927.png)
+
+### 3. Argo CD – Application Synced and Healthy
+![Argo CD](screenshots/Screenshot%202026-11-21%20182138.png)
+
+### 4. Kubernetes – Running Pods
+![Kubernetes Pods](screenshots/Screenshot%202026-11-21%20182335.png)
+
+### 5. Live Application Dashboard
+![Live Application](screenshots/Screenshot%202026-11-21%20182423.png)
+
+
+### 2. Docker Hub – Published Container Image
+![Docker Hub](screenshots/Screenshot%202026-11-21%20181927.png)
+
+### 3. Argo CD – Application Synced and Healthy
+![Argo CD](screenshots/Screenshot%202026-11-21%20182138.png)
+
+### 4. Kubernetes – Running Pods
+![Kubernetes Pods](screenshots/04-kubernetes-pods-running.png)
+
+### 5. Live Application Dashboard
+![Live Application](screenshots/05-live-application.png)
+
 
 **Project Status:** Successfully deployed and verified on a local Kubernetes cluster.
