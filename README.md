@@ -124,7 +124,11 @@ gitops-automated-delivery/
 - Developed a CI/CD pipeline using GitHub Actions to build and publish Docker images.
 - Containerized a Node.js application using Docker and deployed it on Kubernetes.
 
-- 
+- Configured Argo CD for GitOps-based continuous delivery and automated synchronization.
+
+Implemented Kubernetes health checks, self-healing, and declarative deployment management.
+
+Project Status: Successfully deployed and verified on a local Kubernetes cluster.
 
 ## 📸 Project Screenshots
 
